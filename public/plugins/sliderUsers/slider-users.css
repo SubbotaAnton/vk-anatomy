@@ -1,3 +1,24 @@
 .slider-users-wrapper {
     background: red;
+    height: 100px;
+}
+
+.slider-users-wrapper__scroll-left,
+.slider-users-wrapper__scroll-right {
+    height: 100%;
+    background: yellow;
+    width: 40px;
+}
+
+.slider-users-wrapper__scroll-left {
+    float: left;
+}
+
+.slider-users-wrapper__scroll-right {
+    float: right;
+}
+
+.slider-users-wrapper__content {
+    background: white;
+    height: 100%;
 }
