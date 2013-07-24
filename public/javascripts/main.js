@@ -38,8 +38,8 @@ $(document).ready(function(){
             surname : 'Фамилия6',
             name : 'Имя6',
             id : 123
-        },
-        goodSlider = new SliderUsers(params);
+        };
+    window.goodSlider = new SliderUsers(params);
 
     goodSlider.addSlide(slide);
     goodSlider.addSlide(slide2);
@@ -47,8 +47,6 @@ $(document).ready(function(){
     goodSlider.addSlide(slide4);
     goodSlider.addSlide(slide5);
     goodSlider.addSlide(slide6);
-    goodSlider.addSlide(slide);
-    goodSlider.addSlide(slide3);
 
 });
 

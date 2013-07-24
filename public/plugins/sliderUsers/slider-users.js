@@ -17,7 +17,10 @@ SliderUsers.prototype = {
     data : [],
     current : null,
     params : {
-        count: 3 // number must be odd
+        count: 5, // number must be odd
+        width: 607, // default width
+        widthMainItem : 200, // calculate in init
+        widthArrow : 40
     },
     init : function (params) {
         this.initGraphic(params);
@@ -29,13 +32,20 @@ SliderUsers.prototype = {
         /* wrapper design */
         $target.addClass(this.config.wrapperClass);
         if (params.width) {
-            $target.css({
-                'width' : params.width
-            });
+            this.params.width = params.width;
         }
+        $target.css({
+            'width' : this.params.width
+        });
+        this.params.widthMainItem = Math.round(this.params.width / 2);
 
-        $('.' + this.config.wrapperClass + '__scroll-left', $target).on('click', function(e){self.activateSlide(self.getIdLeftSlide())});
-        $('.' + this.config.wrapperClass + '__scroll-right', $target).on('click', this.scrollRight);
+
+        $('.' + this.config.wrapperClass + '__scroll-left', $target).on('click', function(){
+            self.activateSlide(self.getIdLeftSlide())
+        });
+        $('.' + this.config.wrapperClass + '__scroll-right', $target).on('click', function(){
+            self.activateSlide(self.getIdRightSlide())
+        });
 
     },
     addSlide : function (slide) {
@@ -52,11 +62,9 @@ SliderUsers.prototype = {
 
     },
     scrollLeft : function () {
-        console.log(this.getIdLeftSlide());
         this.activateSlide(this.getIdLeftSlide());
     },
     scrollRight : function () {
-        console.log(this);
         this.activateSlide(this.getIdRightSlide());
     },
     isDublicateSlide : function (slide) {
@@ -69,12 +77,12 @@ SliderUsers.prototype = {
         return false;
     },
     getIdRightSlide : function () {
-        var number = this.current = this.data.length ? this.data.length : this.current + 1;
-        return this.data[number];
+        var number = this.current === this.data.length - 1 ? this.data.length - 1 : this.current + 1;
+        return this.data[number].id;
     },
     getIdLeftSlide : function () {
-        var number = this.current = 0 ? 0 : this.current - 1;
-        return this.data[number];
+        var number = this.current === 0 ? 0 : this.current - 1;
+        return this.data[number].id;
     },
     activateSlide : function (id) {
         var i, intStart, intEnd,
@@ -85,23 +93,43 @@ SliderUsers.prototype = {
             if (this.data[i].id === id) {
                 intStart = i - interval > 0 ? i - interval : 0;
                 intEnd = i + interval < dataLength ? i + interval : dataLength - 1;
-                this.showSlides(intStart, intEnd);
+                this.showSlides(intStart, intEnd, i);
                 this.current = i;
             }
         }
     },
-    showSlides : function (start, end) {
+    showSlides : function (start, end, current) {
         var $container = $('.' + this.config.wrapperClass + '__content'),
             self = this,
-            i, id, html;
+            i, id, html, className, widthItem, leftItem;
         $container.empty();
 
         for (i = start; i <= end; i++) {
             html = '<h2>' + this.data[i].surname + ' ' + this.data[i].name + '</h2>';
             id = self.data[i].id;
+            if (i > current) {
+                className = 'slider-users__right-item slider-users__item';
+            } else if (i < current) {
+                className = 'slider-users__left-item slider-users__item';
+            } else {
+                className = 'slider-users__main-item slider-users__item' ;
+            }
+
+            widthItem = i === current ? this.params.widthMainItem :
+                Math.round((this.params.width - this.params.widthArrow * 2 - 2 * this.params.count - this.params.widthMainItem) / (this.params.count - 1));
+            if (i > current) {
+                leftItem = widthItem * (i - start - (current - start - 1)) + this.params.widthMainItem
+            } else if (i < current) {
+                leftItem = widthItem * (i - start);
+            } else {
+                leftItem = Math.round((this.params.width - this.params.widthArrow * 2 - this.params.widthMainItem) / 2);
+            }
+
             $('<div />', {
                 'html' : html,
                 'data-id' : id,
+                'class' : className,
+                'style' : (leftItem ? 'left : ' + leftItem + 'px;' : '') +  'width: ' + widthItem + 'px',
                 click : function(e) {
                     var id = $(e.currentTarget).data('id');
                     self.activateSlide(id);

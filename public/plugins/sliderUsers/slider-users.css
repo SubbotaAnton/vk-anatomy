@@ -21,4 +21,22 @@
 .slider-users-wrapper__content {
     background: white;
     height: 100%;
+    position: relative;
+    margin: 0 40px;
+}
+.slider-users__item {
+    display: inline-block;
+    background: gray;
+    font-size:80%;
+    height: 100%;
+    vertical-align: top;
+    position: absolute;
+}
+.slider-users__left-item {
+}
+.slider-users__right-item {
+}
+.slider-users__main-item {
+    font-size: 120%;
+    background: blue;
 }
