@@ -17,10 +17,10 @@ SliderUsers.prototype = {
     data : [],
     current : null,
     params : {
-        count: 5, // number must be odd
+        count: 7, // number must be odd
         width: 607, // default width
         widthMainItem : 200, // calculate in init
-        widthArrow : 40
+        widthArrow : 35
     },
     init : function (params) {
         this.initGraphic(params);
@@ -37,7 +37,7 @@ SliderUsers.prototype = {
         $target.css({
             'width' : this.params.width
         });
-        this.params.widthMainItem = Math.round(this.params.width / 2);
+        this.params.widthMainItem = Math.round(this.params.width / 3);
 
 
         $('.' + this.config.wrapperClass + '__scroll-left', $target).on('click', function(){
@@ -101,35 +101,39 @@ SliderUsers.prototype = {
     showSlides : function (start, end, current) {
         var $container = $('.' + this.config.wrapperClass + '__content'),
             self = this,
-            i, id, html, className, widthItem, leftItem;
+            i, id, html, title, className, widthSmallItem, widthItem, leftItem, widthImg;
         $container.empty();
 
         for (i = start; i <= end; i++) {
-            html = '<h2>' + this.data[i].surname + ' ' + this.data[i].name + '</h2>';
-            id = self.data[i].id;
-            if (i > current) {
-                className = 'slider-users__right-item slider-users__item';
-            } else if (i < current) {
-                className = 'slider-users__left-item slider-users__item';
-            } else {
-                className = 'slider-users__main-item slider-users__item' ;
-            }
 
-            widthItem = i === current ? this.params.widthMainItem :
-                Math.round((this.params.width - this.params.widthArrow * 2 - 2 * this.params.count - this.params.widthMainItem) / (this.params.count - 1));
-            if (i > current) {
-                leftItem = widthItem * (i - start - (current - start - 1)) + this.params.widthMainItem
-            } else if (i < current) {
-                leftItem = widthItem * (i - start);
+            title = this.data[i].surname + ' ' + this.data[i].name;
+            id = self.data[i].id;
+            if (i === current) {
+                className = 'slider-users__main-item slider-users__item';
             } else {
-                leftItem = Math.round((this.params.width - this.params.widthArrow * 2 - this.params.widthMainItem) / 2);
+                className = 'slider-users__item' ;
             }
+            widthSmallItem = Math.round((this.params.width - this.params.widthArrow * 2 - 2 * this.params.count - this.params.widthMainItem) / (this.params.count - 1));
+            widthItem = i === current ? this.params.widthMainItem :
+                widthSmallItem;
+            if (i > current) {
+                leftItem = widthItem * ((this.params.count - 1) / 2 + i - current - 1) + this.params.widthMainItem + 6; // 4 is border-shadow
+            } else if (i < current) {
+                leftItem = widthItem * ((this.params.count - 1) / 2 + i - current );
+            } else {
+                leftItem = widthSmallItem * ((this.params.count - 1) / 2);
+            }
+            widthItem = widthItem - (7 + 1) * 2; // delete padding and border
+            widthImg = i === current ? null : widthItem;
+            html = '<img class="slider-users__item-img" src="' + this.data[i].src + '"' + (widthImg === null ? null : '" width="' + widthImg + '"') + '>' +
+                (i === current ? '<h2 class="slider-users__item-title">' + this.data[i].surname + '<br>' + this.data[i].name + '</h2>' : '');
 
             $('<div />', {
                 'html' : html,
                 'data-id' : id,
                 'class' : className,
-                'style' : (leftItem ? 'left : ' + leftItem + 'px;' : '') +  'width: ' + widthItem + 'px',
+                'style' : 'left : ' + leftItem + 'px; ' +  'width: ' + widthItem + 'px',
+                'title' : title,
                 click : function(e) {
                     var id = $(e.currentTarget).data('id');
                     self.activateSlide(id);

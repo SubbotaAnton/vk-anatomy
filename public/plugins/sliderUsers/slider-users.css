@@ -1,6 +1,5 @@
 .slider-users-wrapper {
-    background: red;
-    height: 100px;
+    height: 85px;
 }
 
 .slider-users-wrapper__scroll-left,
@@ -12,10 +11,12 @@
 
 .slider-users-wrapper__scroll-left {
     float: left;
+    background: url(arrow_left.png) no-repeat center center;
 }
 
 .slider-users-wrapper__scroll-right {
     float: right;
+    background: url(arrow_right.png) no-repeat center center;
 }
 
 .slider-users-wrapper__content {
@@ -26,17 +27,26 @@
 }
 .slider-users__item {
     display: inline-block;
-    background: gray;
-    font-size:80%;
-    height: 100%;
     vertical-align: top;
     position: absolute;
-}
-.slider-users__left-item {
-}
-.slider-users__right-item {
+    clear: both;
+    padding: 15px 9px 15px 5px;
+    height: 55px;
+
+    background: gainsboro;
+    border-radius: 5px;
+    box-shadow:
+        inset rgba(255,255,255,0.2) 2px 2px 4px 2px,
+        inset rgba(0,0,0,0.5) -2px -2px 4px 2px;
+
 }
 .slider-users__main-item {
-    font-size: 120%;
-    background: blue;
+    padding: 4px 10px;
+    height: 77px;
+}
+.slider-users__item-img {
+    float: left;
+}
+.slider-users__item-title {
+    float: right;
 }
