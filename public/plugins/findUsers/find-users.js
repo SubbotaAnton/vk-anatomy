@@ -1,15 +1,17 @@
 /* required jQuery, jQueeryUI */
 
-function FindUsers(params) {
-    this.init(params);
+function FindUsers(id, params) {
+    this.init(id, params);
 }
 
 FindUsers.prototype = {
-    init : function (params) {
-        $( "#searchUsers" ).autocomplete({
+    init : function (id, params) {
+        $( id ).autocomplete({
             source: params,
-            select: function(ui) {
-                console.log(ui.item.value);
+            select: function(event, ui) {
+                $(id).val('');
+                gadgets.sliderUsers.addSlide(ui.item.value);
+                return false;
             }
         });
 
