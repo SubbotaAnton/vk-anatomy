@@ -30,7 +30,7 @@
     vertical-align: top;
     position: absolute;
     clear: both;
-    padding: 15px 9px 15px 5px;
+    padding: 22px 9px 8px 5px;
     height: 55px;
 
     background: gainsboro;
@@ -47,6 +47,16 @@
 .slider-users__item-img {
     float: left;
 }
+.slider-users__main-item .slider-users__item-img {
+    margin-top: 12px;
+}
 .slider-users__item-title {
-    float: right;
+    float: left;
+    margin-left: 5px;
+    margin-top: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 130px;
+    font-size: 16px;
+    font-weight: normal;
 }

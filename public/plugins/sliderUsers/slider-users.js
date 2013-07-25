@@ -101,7 +101,7 @@ SliderUsers.prototype = {
     showSlides : function (start, end, current) {
         var $container = $('.' + this.config.wrapperClass + '__content'),
             self = this,
-            i, id, html, title, className, widthSmallItem, widthItem, leftItem, widthImg;
+            i, id, html, title, className, widthSmallItem, widthItem, leftItem, widthImg, srcImg, widthTitle;
         $container.empty();
 
         for (i = start; i <= end; i++) {
@@ -125,7 +125,8 @@ SliderUsers.prototype = {
             }
             widthItem = widthItem - (7 + 1) * 2; // delete padding and border
             widthImg = i === current ? null : widthItem;
-            html = '<img class="slider-users__item-img" src="' + this.data[i].src + '"' + (widthImg === null ? null : '" width="' + widthImg + '"') + '>' +
+            srcImg = this.data[i].src || '/plugins/sliderUsers/no-pic.jpg';
+            html = '<img class="slider-users__item-img" src="' + srcImg + '"' + (widthImg === null ? null : '" width="' + widthImg + '"') + '>' +
                 (i === current ? '<h2 class="slider-users__item-title">' + this.data[i].surname + '<br>' + this.data[i].name + '</h2>' : '');
 
             $('<div />', {

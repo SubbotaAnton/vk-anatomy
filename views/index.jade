@@ -1,8 +1,11 @@
 extends layout
 
 block content
-  div.iframe =iframe
+  div.iframe
     div.containerForSlider
       div.slider-users-wrapper__scroll-left
       div.slider-users-wrapper__scroll-right
       div.slider-users-wrapper__content
+    div.containerForSearch
+      label(for="searchUsers") Tags:
+      input#searchUsers
