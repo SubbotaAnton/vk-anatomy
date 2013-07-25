@@ -1,19 +1,26 @@
+
+
 $(document).ready(function(){
+
+    var sliderParams = {
+        width : 607,
+        target : '.containerForSlider'
+    };
+
+    window.gadgets = {
+        sliderUsers: null,
+        findUsers: null,
+        fullInfo : null
+    };
+
+    gadgets.sliderUsers = new SliderUsers(sliderParams);
 
     $.getJSON('/javascripts/data.txt', function(result){
         if (result && result.response) {
             var data = result.response,
                 dataLength = data.length,
+                listOfUsers = [],
                 i, user;
-
-            var params = {
-                    width : 607,
-                    target : '.containerForSlider'
-                };
-
-            window.goodSlider = new SliderUsers(params);
-
-            var availableTags = [];
 
             for (i = 0; i < dataLength; i++) {
                 user = {
@@ -22,14 +29,20 @@ $(document).ready(function(){
                     name : data[i].first_name,
                     id : data[i].uid
                 };
-                goodSlider.addSlide(user);
-                availableTags.push({
+
+                listOfUsers.push({
                     label : data[i].first_name + ' ' + data[i].last_name,
                     value : user
                 });
             }
 
-            window.findUsers = new FindUsers(availableTags);
+            gadgets.findUsers = new FindUsers('#searchUsers', listOfUsers);
+
+            gadgets.fullInfo = {
+                show : function (id) {
+                    console.log('show info for ' + id);
+                }
+            };
 
         }
     });

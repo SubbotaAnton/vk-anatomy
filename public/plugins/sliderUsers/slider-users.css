@@ -32,6 +32,7 @@
     clear: both;
     padding: 22px 9px 8px 5px;
     height: 55px;
+    cursor: pointer;
 
     background: gainsboro;
     border-radius: 5px;
@@ -59,4 +60,15 @@
     width: 130px;
     font-size: 16px;
     font-weight: normal;
+}
+.slider-users__item-info {
+    position: absolute;
+    right: 8px;
+    top: 2px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(info.png) no-repeat;
+    cursor: pointer;
+
 }

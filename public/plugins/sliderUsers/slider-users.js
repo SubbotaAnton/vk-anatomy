@@ -127,7 +127,8 @@ SliderUsers.prototype = {
             widthImg = i === current ? null : widthItem;
             srcImg = this.data[i].src || '/plugins/sliderUsers/no-pic.jpg';
             html = '<img class="slider-users__item-img" src="' + srcImg + '"' + (widthImg === null ? null : '" width="' + widthImg + '"') + '>' +
-                (i === current ? '<h2 class="slider-users__item-title">' + this.data[i].surname + '<br>' + this.data[i].name + '</h2>' : '');
+                (i === current ? '<h2 class="slider-users__item-title">' + this.data[i].surname + '<br>' + this.data[i].name + '</h2>' : '') +
+                '<span class="slider-users__item-info" title="Подробная информация" onclick="gadgets.fullInfo.show(' + id + ')"></span>';
 
             $('<div />', {
                 'html' : html,
